@@ -13,6 +13,11 @@ function MyNote({ note }) {
     setIsEditing(false);
   };
 
+
+
+
+  
+
   const option = {
     year: "numeric",
     month: "long",
