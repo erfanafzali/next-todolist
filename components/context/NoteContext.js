@@ -5,12 +5,16 @@ import axios from "axios";
 // const BASE_URL = "http://localhost:4000";
 const NoteContext = createContext();
 
+
+//initial state
 const initialState = {
   addNote: [] || null,
   isLoading: false,
   error: null,
 };
 
+
+//reducer function + switchCase
 function NoteReducer(state, action) {
   switch (action.type) {
     case "loading":
@@ -71,11 +75,18 @@ function NoteReducer(state, action) {
       throw new Error("Unknown action");
   }
 }
+
+
+
+//Provider => wrap on project
 function NoteProvider({ children }) {
   const [{ isLoading, addNote }, dispatch] = useReducer(
     NoteReducer,
     initialState
   );
+
+
+  // First mount fetchData
   useEffect(() => {
     async function fetchNoteList() {
       dispatch({ type: "loading" });
@@ -95,6 +106,8 @@ function NoteProvider({ children }) {
     fetchNoteList();
   }, []);
 
+
+  // Get note if we need page for each note
   async function getNote(id) {
     dispatch({ type: "loading" });
     try {
@@ -111,6 +124,7 @@ function NoteProvider({ children }) {
     }
   }
 
+  // Create new notes
   async function createNote(newBookmark) {
     dispatch({ type: "loading" });
     try {
@@ -128,6 +142,9 @@ function NoteProvider({ children }) {
     }
   }
 
+
+
+  // Delete each note
   async function deleteNote(id) {
     dispatch({ type: "loading" });
     try {
@@ -142,6 +159,8 @@ function NoteProvider({ children }) {
     }
   }
 
+
+  // Checed note
   async function checkNote(id) {
     dispatch({ type: "loading" });
     try {
@@ -165,6 +184,8 @@ function NoteProvider({ children }) {
   }
 
 
+
+  // Edit each note
   async function editNote(id, updatedNoteData) {
     dispatch({ type: "loading" });
     try {
@@ -204,6 +225,8 @@ function NoteProvider({ children }) {
 
 export default NoteProvider;
 
+
+// create custom hook for note context
 export function useNote() {
   return useContext(NoteContext);
 }

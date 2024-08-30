@@ -14,10 +14,6 @@ function MyNote({ note }) {
   };
 
 
-
-
-  
-
   const option = {
     year: "numeric",
     month: "long",
